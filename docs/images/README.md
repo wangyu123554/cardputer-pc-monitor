@@ -1,13 +1,10 @@
 # Screenshots
 
-Add photos here for the GitHub README. Suggested filenames:
+| File | Page (key) |
+|------|------------|
+| `cpu-page.png` | CPU / RAM / temperature (**1**) |
+| `disk-page.png` | Disk / network / I/O (**2**) |
+| `gpu-page.png` | GPU / system (**3**) |
+| `settings-page.png` | Settings / config (**4**) |
 
-| File | Content |
-|------|---------|
-| `device.jpg` | Cardputer hardware photo |
-| `cpu-page.jpg` | CPU / RAM / temp screen |
-| `disk-page.jpg` | Disk / network screen |
-| `gpu-page.jpg` | GPU / system screen |
-| `setup-portal.jpg` | Web config portal (optional) |
-
-Use JPG or PNG, width around 800–1200 px. Keep each file under 1 MB if possible.
+These four images are shown on the GitHub README.
