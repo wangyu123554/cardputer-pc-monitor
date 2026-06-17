@@ -3,12 +3,12 @@
 Monitor your **Windows PC** from an **M5Stack Cardputer Adv** over Wi‑Fi — CPU, RAM, disk, network, optional GPU and CPU temperature.
 
 <p align="center">
-  <img src="docs/images/cpu-page.png" width="240" alt="CPU / RAM page"/>
-  <img src="docs/images/disk-page.png" width="240" alt="Disk / IO page"/>
+  <img src="docs/images/cpu-page.jpg" width="240" alt="CPU / RAM page"/>
+  <img src="docs/images/disk-page.jpg" width="240" alt="Disk / IO page"/>
 </p>
 <p align="center">
-  <img src="docs/images/gpu-page.png" width="240" alt="GPU page"/>
-  <img src="docs/images/settings-page.png" width="240" alt="Settings page"/>
+  <img src="docs/images/gpu-page.jpg" width="240" alt="GPU page"/>
+  <img src="docs/images/settings-page.jpg" width="240" alt="Settings page"/>
 </p>
 
 ## Features
