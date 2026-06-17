@@ -1,128 +1,132 @@
-# Cardputer PC Monitor
+# M5Stack Cardputer Adv — Windows 电脑 Wi-Fi 监控
 
-Monitor your **Windows PC** from an **M5Stack Cardputer Adv** over Wi‑Fi — CPU, RAM, disk, network, optional GPU and CPU temperature.
+**中文** | [English](README.en.md)
+
+> **关键词：** M5Stack Cardputer Adv · Cardputer Adv · M5Stack · ESP32-S3 · Windows 系统监控 · Wi-Fi · PlatformIO
+
+在 **M5Stack Cardputer Adv** 上通过 Wi‑Fi 监控 **Windows 电脑** — CPU、内存、磁盘、网络，可选 GPU 与 CPU 温度。
 
 <p align="center">
-  <img src="docs/images/cpu-page.jpg" width="240" alt="CPU / RAM page"/>
-  <img src="docs/images/disk-page.jpg" width="240" alt="Disk / IO page"/>
+  <img src="docs/images/cpu-page.jpg" width="480" alt="CPU / RAM 页面"/>
+  <img src="docs/images/disk-page.jpg" width="480" alt="磁盘 / 网络页面"/>
 </p>
 <p align="center">
-  <img src="docs/images/gpu-page.jpg" width="240" alt="GPU page"/>
-  <img src="docs/images/settings-page.jpg" width="240" alt="Settings page"/>
+  <img src="docs/images/gpu-page.jpg" width="480" alt="GPU 页面"/>
+  <img src="docs/images/settings-page.jpg" width="480" alt="设置页面"/>
 </p>
 
-## Features
+## 功能
 
-- **Wi‑Fi monitoring** — no USB cable after setup
-- **PC Agent** — lightweight Python service (`GET /stats` on port 8765)
-- **Web setup portal** — connect Cardputer to your Wi‑Fi and set PC IP
-- **Optional CPU temp** — via LibreHardwareMonitor (HTTP)
-- **Optional GPU** — NVIDIA via `nvidia-smi`
-- **One-click PC setup** — firewall, autostart, LHM watchdog (Windows)
+- **Wi‑Fi 监控** — 配网后无需 USB 线
+- **PC Agent** — 轻量 Python 服务（端口 **8765**，`GET /stats`）
+- **Web 配网门户** — 连接 Wi‑Fi 并填写电脑 IP
+- **CPU 温度（可选）** — LibreHardwareMonitor HTTP
+- **GPU（可选）** — NVIDIA + `nvidia-smi`
+- **一键 PC 部署** — 防火墙、开机自启、LHM 看门狗
 
-## Requirements
+## 环境要求
 
-| Component | Required |
-|-----------|----------|
-| M5Stack **Cardputer Adv** | Yes |
-| **Windows 10/11** PC on same LAN | Yes |
-| Python **3.10+** (Add to PATH) | Yes |
-| PlatformIO (VS Code) for firmware upload | Yes |
-| LibreHardwareMonitor | Optional (CPU temperature) |
-| NVIDIA GPU + drivers | Optional (GPU page) |
+| 组件 | 是否必须 |
+|------|----------|
+| **M5Stack Cardputer Adv** | 是 |
+| **Windows 10/11** 电脑（同一局域网） | 是 |
+| Python **3.10+**（安装时勾选 Add to PATH） | 是 |
+| VS Code + PlatformIO（烧录固件） | 是 |
+| LibreHardwareMonitor | 可选（CPU 温度） |
+| NVIDIA 显卡 + 驱动 | 可选（GPU 页） |
 
-## Quick start
+## 快速开始
 
-### 1. PC — one-time setup
+### 1. 电脑端 — 一次配置
 
 ```bat
 git clone https://github.com/wangyu123554/cardputer-pc-monitor.git
 cd cardputer-pc-monitor
 ```
 
-Right-click **`setup_pc_once.bat`** → **Run as administrator**.
+**右键「以管理员身份运行」→ `setup_pc_once.bat`**
 
-It will:
+会自动完成：
 
-1. Install Python dependencies (`psutil`)
-2. Open firewall port **8765**
-3. Start Agent in background + **login autostart**
-4. Optionally install/configure **LibreHardwareMonitor** + watchdog (CPU temp)
-5. Print your **LAN IP** — you need this for step 3
+1. 安装 Python 依赖（`psutil`）
+2. 防火墙放行 **8765**
+3. Agent 后台运行 + **开机自启**
+4. （可选）安装/配置 **LibreHardwareMonitor** + 看门狗
+5. 显示 **局域网 IP**（配网要用）
 
-Verify on PC: `http://127.0.0.1:8765/stats`
+电脑验证：浏览器打开 `http://127.0.0.1:8765/stats`
 
-### 2. Flash firmware
+### 2. 烧录固件（M5Stack Cardputer Adv）
 
-Open this folder in VS Code with PlatformIO → environment **`m5stack-cardputer`** → **Upload**.
+VS Code 打开本项目 → PlatformIO → 环境 **`m5stack-cardputer`** → **Upload**
 
-### 3. Configure Cardputer
+### 3. Cardputer Adv 配网
 
-1. Connect to Wi‑Fi hotspot **`PCMonitor-Setup`**
-2. Browser: **http://192.168.4.1**
-3. Enter your Wi‑Fi SSID/password and PC **Agent IP** (from setup) + port **8765**
+1. 连接 Wi‑Fi 热点 **`PCMonitor-Setup`**
+2. 浏览器打开 **http://192.168.4.1**
+3. 填写 Wi‑Fi 账号密码 + 电脑 **Agent IP** + 端口 **8765**
 
-## Minimal setup (no autostart / no temperature)
+## 最小安装（不自启 / 不要温度）
 
 ```bat
 pip install -r requirements.txt
 run_agent.bat
 ```
 
-Then flash firmware and configure via the portal. CPU temperature will show `--` without LHM.
+再烧录固件并配网。不装 LHM 时 CPU 温度显示 `--`，其余功能正常。
 
-## Feature matrix
+## 功能说明
 
-| Data | Source | If missing |
-|------|--------|------------|
-| CPU / RAM / disk / network | psutil (Agent) | Fix Agent / firewall |
-| CPU temperature | LibreHardwareMonitor `:8090` | Shows `--` |
-| GPU | `nvidia-smi` | GPU page N/A |
-| Autostart | `setup_pc_once.bat` | Run `run_agent.bat` manually |
+| 数据 | 来源 | 没有时会怎样 |
+|------|------|----------------|
+| CPU / 内存 / 磁盘 / 网络 | psutil（Agent） | 检查 Agent / 防火墙 |
+| CPU 温度 | LibreHardwareMonitor `:8090` | 显示 `--` |
+| GPU | `nvidia-smi` | GPU 页 N/A |
+| 开机自启 | `setup_pc_once.bat` | 手动运行 `run_agent.bat` |
 
-## Keys (Cardputer)
+## 按键
 
-| Key | Page |
-|-----|------|
-| **1** | CPU / RAM / temperature |
-| **2** | Disk / network / disk I/O |
-| **3** | GPU / system |
-| **4** | Settings |
-| **R** | Refresh (settings page) |
-| **Del / Esc** | Home |
+| 键 | 页面 |
+|----|------|
+| **1** | CPU / 内存 / 温度 |
+| **2** | 磁盘 / 网络 / 磁盘 IO |
+| **3** | GPU / 系统信息 |
+| **4** | 设置 |
+| **R** | 刷新（设置页） |
+| **Del / Esc** | 回到首页 |
 
-Status bar: date/time · **LINK** (connected) / **DOWN** (PC unreachable) · battery · Wi‑Fi
+状态栏：**日期时间 · LINK（已连接）/ DOWN（断开）· 电量 · WiFi**
 
-## PC scripts
+## PC 脚本
 
-| Script | Purpose |
-|--------|---------|
-| `setup_pc_once.bat` | **Recommended** — full one-time setup |
-| `run_agent.bat` | Debug (console window) |
-| `restart_agent.bat` | Restart Agent |
-| `install_autostart.bat` | Agent autostart only |
-| `install_lhm_autostart.bat` | LHM + watchdog only |
-| `uninstall_all.bat` | Remove autostart tasks |
-| `open_firewall.bat` | Firewall rule only |
+| 脚本 | 用途 |
+|------|------|
+| `setup_pc_once.bat` | **推荐** — 一键完整配置 |
+| `run_agent.bat` | 调试（有窗口） |
+| `restart_agent.bat` | 重启 Agent |
+| `install_autostart.bat` | 仅 Agent 自启 |
+| `install_lhm_autostart.bat` | 仅 LHM + 看门狗 |
+| `uninstall_all.bat` | 取消所有自启 |
+| `open_firewall.bat` | 仅防火墙 |
 
-## Project layout
+## 目录结构
 
 ```
 cardputer-pc-monitor/
-├── src/                 # Cardputer firmware (ESP32-S3)
+├── src/                 # M5Stack Cardputer Adv 固件（ESP32-S3）
 ├── platformio.ini
 ├── pc_monitor_agent.py  # Windows Agent
-├── setup_pc_once.bat    # PC one-click setup
+├── setup_pc_once.bat    # 电脑一键配置
 ├── requirements.txt
 └── docs/
-    ├── TROUBLESHOOTING.md
-    └── images/          # Screenshots
+    ├── TROUBLESHOOTING.zh-CN.md
+    └── images/          # 截图
 ```
 
-## Troubleshooting
+## 常见问题
 
-See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md).
+见 [docs/TROUBLESHOOTING.zh-CN.md](docs/TROUBLESHOOTING.zh-CN.md)
 
-## License
+## 许可证
 
-MIT — see [LICENSE](LICENSE).
+MIT — 见 [LICENSE](LICENSE)
